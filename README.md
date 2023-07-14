@@ -1,0 +1,1 @@
+Quarkus Todo application. Used in demos about testcontainers integration.
