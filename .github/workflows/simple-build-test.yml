@@ -20,6 +20,12 @@ concurrency:
 jobs:
   build-test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - quarkus-todo
+    name: build-test-${{ matrix.project }}
     steps:
       - uses: actions/checkout@v3
 
@@ -31,4 +37,5 @@ jobs:
           cache: maven
 
       - name: build-test
+        working-directory: ${{ matrix.project }}
         run: ./mvnw -B clean verify
