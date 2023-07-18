@@ -2,12 +2,13 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.quarkus</groupId>
+  <groupId>org.acme</groupId>
   <artifactId>quarkus-todo-apps</artifactId>
   <version>1.0</version>
   <packaging>pom</packaging>
   <name>Quarkus Todo Demo Apps</name>
   <modules>
     <module>quarkus-todo</module>
+    <module>quarkus-todo-listener</module>
   </modules>
 </project>

@@ -1,0 +1,1 @@
+This is a todo listener app. It simply logs events and sends them as a stream of server-sent events.

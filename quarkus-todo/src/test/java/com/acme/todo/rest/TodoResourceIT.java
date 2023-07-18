@@ -33,7 +33,6 @@ import io.smallrye.reactive.messaging.kafka.companion.KafkaCompanion;
 public class TodoResourceIT {
 	private static final String COMPLETIONS_TOPIC_NAME = "todocompletions";
 	private static final TodoEntity TODO = new TodoEntity(0L, "My first todo", true);
-	private static final int NB_TODOS = 1;
 	private static final int DEFAULT_ORDER = 0;
 
 	@InjectKafkaCompanion

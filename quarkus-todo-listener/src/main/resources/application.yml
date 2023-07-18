@@ -1,0 +1,22 @@
+quarkus:
+  http:
+    cors:
+      ~: true
+      origins: "*"
+    port: 8081
+    test-port: 0
+  jackson:
+    serialization-inclusion: non_empty
+  swagger-ui:
+    always-include: true
+
+mp:
+  messaging:
+    incoming:
+      todocompletions:
+        broadcast: true
+        connector: smallrye-kafka
+        topic: todocompletions
+        auto:
+          offset:
+            reset: earliest

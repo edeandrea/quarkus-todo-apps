@@ -28,6 +28,7 @@ jobs:
       matrix:
         project:
           - quarkus-todo
+          - quarkus-todo-listener
     name: jvm-build-test-${{ matrix.project }}
     steps:
       - uses: actions/checkout@v3
@@ -54,6 +55,7 @@ jobs:
       matrix:
         project:
           - quarkus-todo
+          - quarkus-todo-listener
     name: native-build-test-${{ matrix.project }}
     steps:
       - uses: actions/checkout@v3
