@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 
+import com.acme.todo.WiremockResourceTestLifecycleManager;
 import com.acme.todo.client.TwitterClient.Tweet;
 import com.acme.todo.client.TwitterClient.TweetResponse;
-import com.acme.todo.rest.WiremockResourceTestLifecycleManager;
 
 @QuarkusTest
 @QuarkusTestResource(WiremockResourceTestLifecycleManager.class)

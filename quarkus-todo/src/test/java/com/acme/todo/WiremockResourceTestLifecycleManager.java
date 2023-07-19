@@ -1,4 +1,4 @@
-package com.acme.todo.rest;
+package com.acme.todo;
 
 import java.util.Map;
 
