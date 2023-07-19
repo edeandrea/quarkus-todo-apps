@@ -28,7 +28,7 @@ import io.restassured.http.ContentType;
 import io.smallrye.reactive.messaging.kafka.companion.KafkaCompanion;
 
 @QuarkusIntegrationTest
-@QuarkusTestResource(value = KafkaCompanionResource.class, restrictToAnnotatedClass = true)
+@QuarkusTestResource(KafkaCompanionResource.class)
 @TestMethodOrder(OrderAnnotation.class)
 public class TodoResourceIT {
 	private static final String COMPLETIONS_TOPIC_NAME = "todocompletions";

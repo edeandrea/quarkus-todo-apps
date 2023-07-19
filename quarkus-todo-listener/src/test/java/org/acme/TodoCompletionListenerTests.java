@@ -25,7 +25,7 @@ import io.quarkus.test.kafka.KafkaCompanionResource;
 import io.smallrye.reactive.messaging.kafka.companion.KafkaCompanion;
 
 @QuarkusTest
-@QuarkusTestResource(value = KafkaCompanionResource.class, restrictToAnnotatedClass = true)
+@QuarkusTestResource(KafkaCompanionResource.class)
 public class TodoCompletionListenerTests {
 	private static final String COMPLETED_TODO_TEXT = "Completed todo #";
 	private static final InMemoryLogHandler LOG_HANDLER = new InMemoryLogHandler(logRecord -> true);
