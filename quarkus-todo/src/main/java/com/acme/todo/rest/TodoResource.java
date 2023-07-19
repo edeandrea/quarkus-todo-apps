@@ -14,12 +14,15 @@ import jakarta.ws.rs.core.MediaType;
 
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import io.quarkus.logging.Log;
 import io.quarkus.narayana.jta.QuarkusTransaction;
 import io.quarkus.panache.common.Sort;
 import io.quarkus.panache.common.Sort.Direction;
 
+import com.acme.todo.client.TwitterClient;
+import com.acme.todo.client.TwitterClient.Tweet;
 import com.acme.todo.domain.TodoEntity;
 import com.acme.todo.repository.TodoRepository;
 
@@ -28,10 +31,12 @@ import com.acme.todo.repository.TodoRepository;
 public class TodoResource {
 	private final TodoRepository todoRepository;
 	private final Emitter<TodoEntity> entityEmitter;
+	private final TwitterClient twitterClient;
 
-	public TodoResource(TodoRepository todoRepository, @Channel("todocompletions") Emitter<TodoEntity> entityEmitter) {
+	public TodoResource(TodoRepository todoRepository, @Channel("todocompletions") Emitter<TodoEntity> entityEmitter, @RestClient TwitterClient twitterClient) {
 		this.todoRepository = todoRepository;
 		this.entityEmitter = entityEmitter;
+		this.twitterClient = twitterClient;
 	}
 
 	@GET
@@ -88,5 +93,6 @@ public class TodoResource {
 	private void completeTodo(TodoEntity todo) {
 		Log.infof("Completing todo: %s", todo);
 		this.entityEmitter.send(todo);
+		this.twitterClient.sendTweet(new Tweet("Hey look what task I just completed! " + todo.getTitle()));
 	}
 }

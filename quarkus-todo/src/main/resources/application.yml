@@ -15,6 +15,9 @@ quarkus:
     test-port: 0
   jackson:
     serialization-inclusion: non_empty
+  rest-client:
+    twitter-api:
+      url: https://twitter.com/api
   swagger-ui:
     always-include: true
 
