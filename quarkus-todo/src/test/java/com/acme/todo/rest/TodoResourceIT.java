@@ -22,6 +22,7 @@ import io.quarkus.test.junit.QuarkusIntegrationTest;
 import io.quarkus.test.kafka.InjectKafkaCompanion;
 import io.quarkus.test.kafka.KafkaCompanionResource;
 
+import com.acme.todo.WiremockResourceTestLifecycleManager;
 import com.acme.todo.domain.TodoEntity;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -29,6 +30,7 @@ import io.smallrye.reactive.messaging.kafka.companion.KafkaCompanion;
 
 @QuarkusIntegrationTest
 @QuarkusTestResource(KafkaCompanionResource.class)
+@QuarkusTestResource(WiremockResourceTestLifecycleManager.class)
 @TestMethodOrder(OrderAnnotation.class)
 public class TodoResourceIT {
 	private static final String COMPLETIONS_TOPIC_NAME = "todocompletions";
