@@ -1,22 +1,11 @@
-quarkus:
-  datasource:
-    jdbc:
-      telemetry: true
-    metrics:
-      enabled: true
-  hibernate-orm:
-    database:
-      generation: drop-and-create
-    sql-load-script: import.sql
-  http:
-    cors:
-      ~: true
-      origins: "*"
-    test-port: 0
-  jackson:
-    serialization-inclusion: non_empty
-  swagger-ui:
-    always-include: true
+"%prod":
+  quarkus:
+    hibernate-orm:
+      database:
+        generation: drop-and-create
+      sql-load-script: import.sql
+    swagger-ui:
+      always-include: true
 
 mp:
   messaging:
