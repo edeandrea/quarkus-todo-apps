@@ -1,6 +1,7 @@
 package com.acme.todo.rest;
 
 import java.util.List;
+import java.util.Optional;
 
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.DELETE;
@@ -53,10 +54,10 @@ public class TodoResource {
 	}
 
 	@PUT
-	@Transactional
 	public void update(TodoEntity resource) {
 		Log.infof("Updating todo: %s", resource);
-		QuarkusTransaction.requiringNew()
+
+		Optional<TodoEntity> entity = QuarkusTransaction.requiringNew()
 			.call(() -> this.todoRepository.findByIdOptional(resource.getId())
 				.map(todo -> {
 					todo.setCompleted(resource.isCompleted());
@@ -64,7 +65,9 @@ public class TodoResource {
 
 					return todo;
 				})
-				.filter(TodoEntity::isCompleted))
+			);
+
+		entity.filter(TodoEntity::isCompleted)
 			.ifPresent(this::completeTodo);
 	}
 

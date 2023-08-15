@@ -40,3 +40,4 @@ nb-configuration.xml
 mta-report
 windup-report
 ?
+/.quarkus/cli/plugins/quarkus-cli-catalog.json
