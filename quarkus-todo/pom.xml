@@ -3,9 +3,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.acme</groupId>
-  <artifactId>quarkus-todos</artifactId>
+  <artifactId>quarkus-todo</artifactId>
   <version>1.0</version>
-  <name>quarkus-todos</name>
+  <name>quarkus-todo</name>
   <description>A Quarkus Todo application</description>
   <properties>
     <assertj.version>3.24.2</assertj.version>
