@@ -62,6 +62,8 @@ curl -Ls https://raw.githubusercontent.com/edeandrea/quarkus-todo-apps/main/quar
 .. Should see `No tests found` because there aren't any tests yet!
 . Go through the source tree in the app quickly showing the existing code
 
+'''
+
 === Enhance the app with Kafka messaging
 In this section we want to demonstrate an additional capability of Quarkus Dev Services: the ability to share containers between applications.
 
@@ -81,6 +83,8 @@ In this app we will add capability to, upon completing a Todo, publish a message
 .. Click on the `todocompletions` topic
 .. Show the message that was place on the topic when the Todo item was completed
 
+'''
+
 ==== Start up the listening app
 . In a separate terminal where https://github.com/edeandrea/quarkus-todo-apps/tree/main/quarkus-todo-listener is cloned, run `./mvnw clean quarkus:dev` or `quarkus dev --clean`
 . One the app starts up you should see a log message resembling
@@ -92,6 +96,8 @@ INFO [org.acm.TodoCompletionListener] (vert.x-eventloop-thread-3) Todo completed
 +
 . Go back to the UI and complete another todo item while watching the log
 . Explain that the Dev Services of the listening app are sharing the Kafka broker started by the main app.
+
+'''
 
 === Add custom service and tests using Testcontainers
 In this section we will show the current Dev Services and show how to wire tests with services that don't exist out of the box.
@@ -113,10 +119,14 @@ Additionally, https://wiremock.org[Wiremock] has a set of https://library.wiremo
 * The `Example responses` section of the docs shows the response structure.
 * Show that we've put in `response.body.data.text` as `Go on vacation!`
 
-==== Create the `WiremockResourceTestLifecycleManager`
+'''
+
+==== Create the `WiremockResourceTestLifecycleManager` class
 . In `src/test/java/com/acme/todo`, create a new class called `WiremockResourceTestLifecycleManager.java`
 . Highlight everything and use the `wiremockResourceTestLifecycleManager` IntelliJ Live Template to insert the class details
 . Explain the details of the class
+
+'''
 
 ==== Create the `TwitterClient` interface
 . In `src/main/java/com/acme/todo/client`, create a new interface called `TwitterClient.java`
@@ -131,6 +141,8 @@ Additionally, https://wiremock.org[Wiremock] has a set of https://library.wiremo
 * `POST` operation
 * `/2/tweets` URI path
 * Produces & consumes `application/json`
+
+'''
 
 ==== Create the `TwitterClientTests` test class
 . Put cursor on the `TwitterClient` class header and use IntelliJ quick assist for `Create test`
