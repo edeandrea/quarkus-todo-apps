@@ -1,3 +1,7 @@
+quarkus:
+  test:
+    continuous-testing: enabled
+
 mp:
   messaging:
     outgoing:

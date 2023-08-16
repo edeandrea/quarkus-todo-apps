@@ -1,0 +1,140 @@
+:pdf-page-margin: [0.25in, 0.25in, 0.25in, 0.25in]
+
+This is the demo "script" that Eric uses on his machine using his IntelliJ Live Templates.
+
+== Pre-demo prep
+. Switch off https://podman.io[Podman] / https://www.docker.com/products/docker-desktop[Docker desktop]
+. Turn on https://testcontainers.com/desktop[Testcontainers Desktop]
+. Switch Testcontainers Desktop to use https://testcontainers.com/cloud[Testcontainers Cloud]
+
+== Create the project
+Go to https://code.quarkus.io (or in an IDE) and create app with the following info:
+
+[cols="1,1"]
+|===
+s|groupId
+|`org.acme`
+
+s|artifactId
+|`quarkus-todo`
+
+s|Build Tool
+|`Maven`
+
+s|Java Version
+|`17`
+
+s|Starter Code
+|`No`
+
+s|Extensions
+a|
+
+* `resteasy-reactive-jackson`
+* `jdbc-postgresql`
+* `hibernate-orm-panache`
+* `config-yaml`
+* `rest-client-reactive-jackson`
+* `smallrye-openapi`
+* `smallrye-health`
+|===
+
+== Add starter/setup stuff
+Run this script to do some initial project setup and scaffolding.The `cURL` command is required by this script.
+
+[source,bash]
+----
+curl -Ls https://raw.githubusercontent.com/edeandrea/quarkus-todo-apps/main/quarkus-todo/demo/setup-demo.sh | bash
+----
+
+== Run the Demo
+=== Start & use the app
+. Run Quarkus Dev mode (`./mvnw clean quarkus:dev -Dquarkus.rest-client.twitter-api.url=http://localhost:8888` or `quarkus dev -Dquarkus.rest-client.twitter-api.url=http://localhost:8888 --clean`)
+. Press the `w` key in the console to open the application's UI
+* Interact with it a bit
+. Press the `d` key in the console to open the Dev UI
+.. Show the DevServices and the running PostgreSQL instance
+... Explain that Quarkus automatically spun up a PostgreSQL instance by using Testcontainers under the covers
+... Go back to console and run `docker ps`, then when nothing show's up, ask "Where are my containers???"
+... Explain Testcontainers cloud by going to the dashboard and showing running instance
+.. In the Dev UI open the Swagger UI and interact with it
+. Continuous testing should already be enabled
+.. Should see `No tests found` because there aren't any tests yet!
+. Go through the source tree in the app quickly showing the existing code
+
+=== Enhance the app with Kafka messaging
+In this section we want to demonstrate an additional capability of Quarkus Dev Services: the ability to share containers between applications.
+
+In this app we will add capability to, upon completing a Todo, publish a message to a Kafka topic.
+
+. Add the Kafka extension to the app
+* In separate terminal run `quarkus ext add smallrye-reactive-messaging-kafka`
+. In `TodoResource.java`, add `private final Emitter<TodoEntity> entityEmitter;` to the class attributes
+. Use the `Add constructor parameter` quick assist in IntelliJ
+. Add `@Channel("todocompletions")` to the `Emitter<TodoEntity> entityEmitter` constructor parameter
+. In the `completeTodo` method, add `this.entityEmitter.send(todo);` under the `// 1) Send it to a Kafka topic for processing` comment
+. Press `w` in the console to bring the app up again, this time completing a Todo item
+. Press `d` in the console to bring up the Dev UI again
+.. Click the `Back to the previous Dev UI` button at the top
+.. In the `Apache Kafka Client` box, click `Kafka UI`
+* Explain that the Kafka UI hasn't yet migrated to the new Dev UI
+.. Click on the `todocompletions` topic
+.. Show the message that was place on the topic when the Todo item was completed
+
+==== Start up the listening app
+. In a separate terminal where https://github.com/edeandrea/quarkus-todo-apps/tree/main/quarkus-todo-listener is cloned, run `./mvnw clean quarkus:dev` or `quarkus dev --clean`
+. One the app starts up you should see a log message resembling
++
+[source,log]
+----
+INFO [org.acm.TodoCompletionListener] (vert.x-eventloop-thread-3) Todo completed: Todo[id=1, title=go on vacation!]
+----
++
+. Go back to the UI and complete another todo item while watching the log
+. Explain that the Dev Services of the listening app are sharing the Kafka broker started by the main app.
+
+=== Add custom service and tests using Testcontainers
+In this section we will show the current Dev Services and show how to wire tests with services that don't exist out of the box.
+
+In our example we will enhance the application so that upon completion of a Todo item we will tweet a message about it to Twitter.
+
+For this we will want to mock the Twitter API, since we do not have a Twitter API key yet. Luckily, https://testcontainers.com/modules/wiremock[Testcontainers has a Wiremock module] that can help us.
+
+Additionally, https://wiremock.org[Wiremock] has a set of https://library.wiremock.org[API Templates] that we can use.
+
+. Explain the https://quarkus.io/guides/dev-services[available out-of-the-box services that Quarkus supports].
+. Go to the https://library.wiremock.org[Wiremock API Templates Library] and click on https://library.wiremock.org/catalog/api/t/twitter.com/twitter-com-current[`Twitter API v2`]
+. Click on https://library.wiremock.org/catalog/api/t/twitter.com/twitter-com-current/twitter.com-current-stubs.json[`Download WireMock JSON`] and save the file as `src/test/resources/com/acme/todo/WiremockResourceTestLifecycleManager/twitter.com-current-stubs.json`
+. Open the file and explain that this is a mock of the *ENTIRE* Twitter v2 API. We probably don't care about all of these endpoints
+. Go to the https://developer.twitter.com/en/docs/twitter-api/tweets/manage-tweets/api-reference/post-tweets[`POST /2/tweets` section of the Twitter API docs] which describes the REST endpoint on how to post tweets
+. Return to the WireMock JSON, highlight all of the the text, then use the `postTweetWiremockJson` IntelliJ Live Template to insert only the single endpoint we care about.
+* Content of Live Template comes from https://github.com/edeandrea/quarkus-todo-apps/blob/main/quarkus-todo/src/test/resources/com/acme/todo/WiremockResourceTestLifecycleManager/twitter.com-current-stubs.json
+. Inspect the JSON and compare it to the Twitter API docs, specifically the response.
+* The `Example responses` section of the docs shows the response structure.
+* Show that we've put in `response.body.data.text` as `Go on vacation!`
+
+==== Create the `WiremockResourceTestLifecycleManager`
+. In `src/test/java/com/acme/todo`, create a new class called `WiremockResourceTestLifecycleManager.java`
+. Highlight everything and use the `wiremockResourceTestLifecycleManager` IntelliJ Live Template to insert the class details
+. Explain the details of the class
+
+==== Create the `TwitterClient` interface
+. In `src/main/java/com/acme/todo/client`, create a new interface called `TwitterClient.java`
+. Highlight everything and use the `twitterClient` IntelliJ live template to insert everything
+. Explain the `@RegisterRestClient(configKey = "twitter-api")` class annotation
+* At build time, Quarkus will create an implementation of the interface
+* The key `quarkus.rest-client.twitter-api` will be registered for configuration
+** Specifically `quarkus.rest-client.twitter-api.url`, which we saw being set in `WiremockResourceTestLifecycleManager`
+. Explain the `Tweet` record and how it corresponds to the body parameters of the `POST /2/tweets` operation
+. Explain the `TweetResponse` record and how it corresponds to the response of the operation
+. Explain the `sendTweet` method
+* `POST` operation
+* `/2/tweets` URI path
+* Produces & consumes `application/json`
+
+==== Create the `TwitterClientTests` test class
+. Put cursor on the `TwitterClient` class header and use IntelliJ quick assist for `Create test`
+* Name the test class `TwitterClientTests`
+. Highlight everything and use the `twitterClientTests` IntelliJ live template to insert everything
+. Walk through the test class, explaining things as you go
+. Continuous testing should have automatically picked things up and now show that the test is passing
