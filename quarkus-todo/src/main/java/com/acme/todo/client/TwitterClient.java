@@ -10,12 +10,6 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @RegisterRestClient(configKey = "twitter-api")
 public interface TwitterClient {
-	@POST
-	@Path("/2/tweets")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	TweetResponse sendTweet(Tweet tweet);
-
 	record Tweet(String id, String text) {
 		public Tweet(String text) {
 			this("", text);
@@ -23,4 +17,10 @@ public interface TwitterClient {
 	}
 
 	record TweetResponse(Tweet data) { }
+
+	@POST
+	@Path("/2/tweets")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	TweetResponse sendTweet(Tweet tweet);
 }
