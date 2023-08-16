@@ -13,6 +13,7 @@ mkdir -p src/test/java/com/acme/todo/rest
 
 # Fetch starter files
 echo "Fetching starter files"
+curl -Ls https://raw.githubusercontent.com/edeandrea/quarkus-todo-apps/main/quarkus-todo/initialCode/pom.xml -o pom.xml
 curl -Ls https://raw.githubusercontent.com/edeandrea/quarkus-todo-apps/main/quarkus-todo/src/main/java/com/acme/todo/domain/TodoEntity.java -o src/main/java/com/acme/todo/domain/TodoEntity.java
 curl -Ls https://raw.githubusercontent.com/edeandrea/quarkus-todo-apps/main/quarkus-todo/src/main/java/com/acme/todo/repository/TodoRepository.java -o src/main/java/com/acme/todo/repository/TodoRepository.java
 curl -Ls https://raw.githubusercontent.com/edeandrea/quarkus-todo-apps/main/quarkus-todo/initialCode/TodoResource.java -o src/main/java/com/acme/todo/rest/TodoResource.java
