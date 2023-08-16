@@ -28,9 +28,6 @@ class TwitterClientTests {
 		assertThat(response)
 			.isNotNull()
 			.extracting(TweetResponse::data)
-			.isNotNull();
-
-		assertThat(response.data())
 			.isNotNull()
 			.extracting(Tweet::text)
 			.isEqualTo("Go on vacation!");

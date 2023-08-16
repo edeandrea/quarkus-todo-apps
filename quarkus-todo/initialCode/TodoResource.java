@@ -88,5 +88,10 @@ public class TodoResource {
 		Log.infof("Completing todo: %s", todo);
 
 		// Extra things we want to do in the future when a Todo is completed
+		// 1) Send it to a Kafka topic for processing
+
+
+		// 2) Tweet it
+
 	}
 }
