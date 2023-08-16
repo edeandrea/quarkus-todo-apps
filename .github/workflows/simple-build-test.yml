@@ -9,11 +9,13 @@ on:
       - main
     paths-ignore:
       - '**/*.md'
+      - '**/*.adoc'
   pull_request:
     branches:
       - main
     paths-ignore:
       - '**/*.md'
+      - '**/*.adoc'
   workflow_dispatch:
 
 concurrency:

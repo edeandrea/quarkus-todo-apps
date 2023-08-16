@@ -124,6 +124,7 @@ Additionally, https://wiremock.org[Wiremock] has a set of https://library.wiremo
 ==== Create the `WiremockResourceTestLifecycleManager` class
 . In `src/test/java/com/acme/todo`, create a new class called `WiremockResourceTestLifecycleManager.java`
 . Highlight everything and use the `wiremockResourceTestLifecycleManager` IntelliJ Live Template to insert the class details
+* Content of live template comes from https://github.com/edeandrea/quarkus-todo-apps/blob/main/quarkus-todo/src/test/java/com/acme/todo/WiremockResourceTestLifecycleManager.java
 . Explain the details of the class
 
 '''
@@ -131,6 +132,7 @@ Additionally, https://wiremock.org[Wiremock] has a set of https://library.wiremo
 ==== Create the `TwitterClient` interface
 . In `src/main/java/com/acme/todo/client`, create a new interface called `TwitterClient.java`
 . Highlight everything and use the `twitterClient` IntelliJ live template to insert everything
+* Content of live template comes from https://github.com/edeandrea/quarkus-todo-apps/blob/main/quarkus-todo/src/main/java/com/acme/todo/client/TwitterClient.java
 . Explain the `@RegisterRestClient(configKey = "twitter-api")` class annotation
 * At build time, Quarkus will create an implementation of the interface
 * The key `quarkus.rest-client.twitter-api` will be registered for configuration
@@ -148,5 +150,6 @@ Additionally, https://wiremock.org[Wiremock] has a set of https://library.wiremo
 . Put cursor on the `TwitterClient` class header and use IntelliJ quick assist for `Create test`
 * Name the test class `TwitterClientTests`
 . Highlight everything and use the `twitterClientTests` IntelliJ live template to insert everything
+* Content of live template comes from https://github.com/edeandrea/quarkus-todo-apps/blob/main/quarkus-todo/src/test/java/com/acme/todo/client/TwitterClientTests.java
 . Walk through the test class, explaining things as you go
 . Continuous testing should have automatically picked things up and now show that the test is passing
