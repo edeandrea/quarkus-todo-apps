@@ -1,0 +1,14 @@
+mp:
+  messaging:
+    outgoing:
+      todocompletions:
+        connector: smallrye-kafka
+        topic: todocompletions
+
+"%test":
+  mp:
+    messaging:
+      outgoing:
+        todocompletions:
+          connector: smallrye-in-memory
+          merge: true
