@@ -40,7 +40,7 @@ a|
 |===
 
 == Add starter/setup stuff
-Run this script to do some initial project setup and scaffolding.The `cURL` command is required by this script.
+`cd` into the project directory & run this script to do some initial project setup and scaffolding. The `cURL` command is required by this script.
 
 [source,bash]
 ----
