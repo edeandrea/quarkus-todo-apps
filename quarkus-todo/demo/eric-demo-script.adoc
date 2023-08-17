@@ -49,7 +49,7 @@ curl -Ls https://raw.githubusercontent.com/edeandrea/quarkus-todo-apps/main/quar
 
 == Run the Demo
 === Start & use the app
-. Run Quarkus Dev mode (`./mvnw clean quarkus:dev -Dquarkus.rest-client.twitter-api.url=http://localhost:8888` or `quarkus dev -Dquarkus.rest-client.twitter-api.url=http://localhost:8888 --clean`)
+. Run Quarkus Dev mode (`./mvnw clean quarkus:dev` or `quarkus dev --clean`)
 . Press the `w` key in the console to open the application's UI
 * Interact with it a bit
 . Press the `d` key in the console to open the Dev UI

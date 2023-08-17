@@ -71,6 +71,11 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>io.smallrye.reactive</groupId>
+			<artifactId>smallrye-reactive-messaging-in-memory</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.github.wiremock</groupId>
 			<artifactId>wiremock-testcontainers-java</artifactId>
 			<version>1.0-alpha-6</version>
