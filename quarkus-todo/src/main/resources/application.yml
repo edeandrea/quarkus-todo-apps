@@ -1,3 +1,7 @@
+quarkus:
+  test:
+    continuous-testing: enabled
+
 "%prod":
   quarkus:
     hibernate-orm:
@@ -13,6 +17,12 @@ mp:
       todocompletions:
         connector: smallrye-kafka
         topic: todocompletions
+
+"%dev":
+  quarkus:
+    rest-client:
+      twitter-api:
+        url: http://localhost:8888
 
 "%test":
   mp:

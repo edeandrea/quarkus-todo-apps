@@ -1,7 +1,7 @@
 package com.acme.todo.rest;
 
 import static io.restassured.RestAssured.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.ParameterizedTest.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.*;
@@ -13,6 +13,7 @@ import jakarta.enterprise.inject.Any;
 import jakarta.inject.Inject;
 
 import org.eclipse.microprofile.reactive.messaging.Message;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,6 +23,9 @@ import io.quarkus.panache.common.Sort;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 
+import com.acme.todo.client.TwitterClient;
+import com.acme.todo.client.TwitterClient.Tweet;
+import com.acme.todo.client.TwitterClient.TweetResponse;
 import com.acme.todo.domain.TodoEntity;
 import com.acme.todo.repository.TodoRepository;
 import io.restassured.http.ContentType;
@@ -38,6 +42,10 @@ class TodoResourceTests {
 	@Inject
 	@Any
 	InMemoryConnector inMemoryConnector;
+
+	@InjectMock
+	@RestClient
+	TwitterClient twitterClient;
 
 	@BeforeEach
 	public void beforeEach() {
@@ -91,6 +99,12 @@ class TodoResourceTests {
 		when(this.todoRepository.findByIdOptional(eq(todo.getId())))
 			.thenReturn(Optional.of(todo));
 
+		if (completed) {
+			doReturn(new TweetResponse(new Tweet(todo.getTitle())))
+				.when(this.twitterClient)
+				.sendTweet(argThat(tweet -> tweet.text().equals("Hey look what task I just completed! " + TODO.getTitle())));
+		}
+
 		given()
 			.body(todo)
 			.contentType(ContentType.JSON)
@@ -106,6 +120,8 @@ class TodoResourceTests {
 				.extracting(Message::getPayload)
 				.usingRecursiveComparison()
 				.isEqualTo(todo);
+
+			verify(this.twitterClient).sendTweet(argThat(tweet -> tweet.text().equals("Hey look what task I just completed! " + TODO.getTitle())));
 		}
 		else {
 			assertThat(emittedMessages)
@@ -113,7 +129,7 @@ class TodoResourceTests {
 		}
 
 		verify(this.todoRepository).findByIdOptional(eq(todo.getId()));
-		verifyNoMoreInteractions(this.todoRepository);
+		verifyNoMoreInteractions(this.todoRepository, this.twitterClient);
 	}
 
 	@ParameterizedTest(name = DISPLAY_NAME_PLACEHOLDER + "[" + INDEX_PLACEHOLDER + "] (" + ARGUMENTS_WITH_NAMES_PLACEHOLDER + ")")
@@ -124,6 +140,12 @@ class TodoResourceTests {
 			.persist(any(TodoEntity.class));
 
 		var todo = new TodoEntity(TODO.getId(), TODO.getTitle(), completed);
+
+		if (completed) {
+			doReturn(new TweetResponse(new Tweet(todo.getTitle())))
+				.when(this.twitterClient)
+				.sendTweet(argThat(tweet -> tweet.text().equals("Hey look what task I just completed! " + TODO.getTitle())));
+		}
 
 		var createdTodo = given()
 			.body(todo)
@@ -147,6 +169,8 @@ class TodoResourceTests {
 				.extracting(Message::getPayload)
 				.usingRecursiveComparison()
 				.isEqualTo(todo);
+
+			verify(this.twitterClient).sendTweet(argThat(tweet -> tweet.text().equals("Hey look what task I just completed! " + TODO.getTitle())));
 		}
 		else {
 			assertThat(emittedMessages)
@@ -154,7 +178,7 @@ class TodoResourceTests {
 		}
 
 		verify(this.todoRepository).persist(any(TodoEntity.class));
-		verifyNoMoreInteractions(this.todoRepository);
+		verifyNoMoreInteractions(this.todoRepository, this.twitterClient);
 	}
 
 	@Test
