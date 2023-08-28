@@ -77,9 +77,7 @@ In this app we will add capability to, upon completing a Todo, publish a message
 . In the `completeTodo` method, add `this.entityEmitter.send(todo);` under the `// 1) Send it to a Kafka topic for processing` comment
 . Press `w` in the console to bring the app up again, this time completing a Todo item
 . Press `d` in the console to bring up the Dev UI again
-.. Click the `Back to the previous Dev UI` button at the top
-.. In the `Apache Kafka Client` box, click `Kafka UI`
-* Explain that the Kafka UI hasn't yet migrated to the new Dev UI
+.. In the `Apache Kafka Client` box, click `Topics`
 .. Click on the `todocompletions` topic
 .. Show the message that was place on the topic when the Todo item was completed
 
