@@ -10,7 +10,7 @@ mkdir -p src/main/resources/META-INF/resources
 rm -rf src/main/resources/application.properties
 mkdir -p src/test/java/com/acme/todo/client
 mkdir -p src/test/java/com/acme/todo/rest
-mkdir -p src/test/resources/com/acme/todo/WiremockResourceTestLifecycleManager
+mkdir -p src/test/resources/wiremock
 
 # Fetch starter files
 echo "Fetching starter files"

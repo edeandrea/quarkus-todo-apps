@@ -108,11 +108,11 @@ Additionally, https://wiremock.org[Wiremock] has a set of https://library.wiremo
 
 . Explain the https://quarkus.io/guides/dev-services[available out-of-the-box services that Quarkus supports].
 . Go to the https://library.wiremock.org[Wiremock API Templates Library] and click on https://library.wiremock.org/catalog/api/t/twitter.com/twitter-com-current[`Twitter API v2`]
-. Click on https://library.wiremock.org/catalog/api/t/twitter.com/twitter-com-current/twitter.com-current-stubs.json[`Download WireMock JSON`] and save the file as `src/test/resources/com/acme/todo/WiremockResourceTestLifecycleManager/twitter.com-current-stubs.json`
+. Click on https://library.wiremock.org/catalog/api/t/twitter.com/twitter-com-current/twitter.com-current-stubs.json[`Download WireMock JSON`] and save the file as `src/test/resources/wiremock/twitter.com-current-stubs.json`
 . Open the file and explain that this is a mock of the *ENTIRE* Twitter v2 API. We probably don't care about all of these endpoints
 . Go to the https://developer.twitter.com/en/docs/twitter-api/tweets/manage-tweets/api-reference/post-tweets[`POST /2/tweets` section of the Twitter API docs] which describes the REST endpoint on how to post tweets
 . Return to the WireMock JSON, highlight all of the the text, then use the `postTweetWiremockJson` IntelliJ Live Template to insert only the single endpoint we care about.
-* Content of Live Template comes from https://github.com/edeandrea/quarkus-todo-apps/blob/main/quarkus-todo/src/test/resources/com/acme/todo/WiremockResourceTestLifecycleManager/twitter.com-current-stubs.json
+* Content of Live Template comes from https://github.com/edeandrea/quarkus-todo-apps/blob/main/quarkus-todo/src/test/resources/wiremock/twitter.com-current-stubs.json
 . Inspect the JSON and compare it to the Twitter API docs, specifically the response.
 * The `Example responses` section of the docs shows the response structure.
 * Show that we've put in `response.body.data.text` as `Go on vacation!`
