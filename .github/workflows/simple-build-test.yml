@@ -10,12 +10,16 @@ on:
     paths-ignore:
       - '**/*.md'
       - '**/*.adoc'
+      - 'quarkus-todo/initialCode/**'
+      - 'quarkus-todo/demo/**'
   pull_request:
     branches:
       - main
     paths-ignore:
       - '**/*.md'
       - '**/*.adoc'
+      - 'quarkus-todo/initialCode/**'
+      - 'quarkus-todo/demo/**'
   workflow_dispatch:
 
 concurrency:
