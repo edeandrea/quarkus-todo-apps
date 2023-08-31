@@ -40,19 +40,19 @@ public class TodoCompletionListenerTests {
 	@BeforeEach
 	public void beforeEach() {
 		this.kafkaCompanion.registerSerde(
-			Todo.class,
+			TodoCompletionListener.Todo.class,
 			new ObjectMapperSerializer<>(),
-			new ObjectMapperDeserializer<>(Todo.class)
+			new ObjectMapperDeserializer<>(TodoCompletionListener.Todo.class)
 		);
 	}
 
 	@Test
 	void listenerWorks() {
 		// Create 10 records & send them to the channel
-		this.kafkaCompanion.produce(Todo.class)
+		this.kafkaCompanion.produce(TodoCompletionListener.Todo.class)
 			.fromRecords(
 				LongStream.range(0, 10)
-					.mapToObj(id -> new ProducerRecord<String, Todo>(TodoCompletionListener.INCOMING_TOPIC_NAME, new Todo(id, COMPLETED_TODO_TEXT + id)))
+					.mapToObj(id -> new ProducerRecord<String, TodoCompletionListener.Todo>(TodoCompletionListener.INCOMING_TOPIC_NAME, new TodoCompletionListener.Todo(id, COMPLETED_TODO_TEXT + id)))
 					.toList()
 			);
 
@@ -80,14 +80,14 @@ public class TodoCompletionListenerTests {
 			.filter(Objects::nonNull)
 			.map(params -> params[0])
 			.filter(Objects::nonNull)
-			.map(Todo.class::cast)
+			.map(TodoCompletionListener.Todo.class::cast)
 			.toList();
 
 		// Assert the todos match what we expect
 		assertThat(todos)
 			.isNotNull()
 			.hasSize(10)
-			.extracting(Todo::title)
+			.extracting(TodoCompletionListener.Todo::title)
 			.allMatch(s -> s.startsWith(COMPLETED_TODO_TEXT));
 	}
 
