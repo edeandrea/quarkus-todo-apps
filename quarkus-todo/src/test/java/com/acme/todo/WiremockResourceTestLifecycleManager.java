@@ -9,7 +9,7 @@ import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 
 public class WiremockResourceTestLifecycleManager implements QuarkusTestResourceLifecycleManager {
 	private final WireMockContainer wireMockContainer =
-		new WireMockContainer(DockerImageName.parse("wiremock/wiremock:2.35.0-1"))
+		new WireMockContainer(DockerImageName.parse("wiremock/wiremock:3.3.1-1"))
 			.withMappingFromResource("twitter", "wiremock/twitter.com-current-stubs.json");
 
 	@Override
