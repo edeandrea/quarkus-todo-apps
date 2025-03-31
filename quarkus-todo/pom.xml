@@ -15,7 +15,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.version>3.21.0</quarkus.platform.version>
     <surefire-plugin.version>3.5.2</surefire-plugin.version>
-    <testcontainers-wiremock.version>1.0-alpha-14</testcontainers-wiremock.version>
+    <testcontainers-wiremock.version>1.0-alpha-15</testcontainers-wiremock.version>
   </properties>
   <dependencyManagement>
     <dependencies>
