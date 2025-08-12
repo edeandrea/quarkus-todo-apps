@@ -34,7 +34,7 @@ jobs:
           - quarkus-todo-listener
     name: jvm-build-test-${{ matrix.project }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -57,7 +57,7 @@ jobs:
           - quarkus-todo-listener
     name: native-build-test-${{ matrix.project }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: graalvm/setup-graalvm@v1
         with:
